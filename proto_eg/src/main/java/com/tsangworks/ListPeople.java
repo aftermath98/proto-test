@@ -1,6 +1,6 @@
 package com.tsangworks;
 
-import com.example.tutorial.AddressBookProtos;
+import com.tsangworks.auto.AddressBookProtos;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,10 +16,10 @@ public class ListPeople {
     // Iterates though all people in the AddressBook and prints info about them.
     static void Print(AddressBookProtos.AddressBook addressBook) {
         for (AddressBookProtos.Person person: addressBook.getPersonList()) {
-            System.out.println("Person ID: " + person.getId());
-            System.out.println("  Name: " + person.getName());
+            logger.debug("Person ID: " + person.getId());
+            logger.debug("  Name: " + person.getName());
             if (person.hasEmail()) {
-                System.out.println("  E-mail address: " + person.getEmail());
+                logger.debug("  E-mail address: " + person.getEmail());
             }
 
             for (AddressBookProtos.Person.PhoneNumber phoneNumber : person.getPhoneList()) {

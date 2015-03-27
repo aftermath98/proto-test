@@ -1,8 +1,6 @@
-// See README.txt for information and build instructions.
+package com.tsangworks.auto;
 
-package tutorial;
-
-option java_package = "com.example.tutorial";
+option java_package = "com.tsangworks.auto";
 option java_outer_classname = "AddressBookProtos";
 
 message Person {

@@ -1,6 +1,6 @@
 package com.tsangworks;
 
-import com.example.tutorial.AddressBookProtos;
+import com.tsangworks.auto.AddressBookProtos;
 
 import java.io.*;
 

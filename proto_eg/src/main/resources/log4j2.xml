@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Appenders>
+        <File name="FILE_APPENDER" fileName="output.log">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </File>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </Console>
+        <!--<Async name="ASYNC">-->
+            <!--<AppenderRef ref="FILE_APPENDER"/>-->
+            <!--<AppenderRef ref="STDOUT"/>-->
+        <!--</Async>-->
+
+    </Appenders>
+    <Loggers>
+
+        <Logger name="org.apache" level="warn"/>
+
+        <Logger name="com.tsangworks" level="debug"/>
+
+        <Root level="warn">
+            <!--<AppenderRef ref="ASYNC"/>-->
+            <AppenderRef ref="FILE_APPENDER"/>
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>
