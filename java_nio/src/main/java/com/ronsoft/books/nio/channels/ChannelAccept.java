@@ -24,6 +24,7 @@ import java.net.InetSocketAddress;
 public class ChannelAccept
 {
 	public static final String GREETING = "Hello I must be going.\r\n";
+	static byte[] inputByteArray = new byte[1024];
 
 	public static void main (String [] argv)
 		throws Exception
@@ -34,27 +35,36 @@ public class ChannelAccept
 			port = Integer.parseInt (argv [0]);
 		}
 
-		ByteBuffer buffer = ByteBuffer.wrap (GREETING.getBytes());
-		ServerSocketChannel ssc = ServerSocketChannel.open();
+		ByteBuffer outputByteBuffer = ByteBuffer.wrap (GREETING.getBytes());
+		ByteBuffer inputByteBuffer = ByteBuffer.wrap (inputByteArray);
+		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
-		ssc.socket().bind (new InetSocketAddress (port));
-		ssc.configureBlocking (false);
+		serverSocketChannel.socket().bind (new InetSocketAddress (port));
+		serverSocketChannel.configureBlocking(false);
 
 		while (true) {
-			System.out.println ("Waiting for connections");
+			System.out.println("Waiting for connections");
 
-			SocketChannel sc = ssc.accept();
+			SocketChannel socketChannel = serverSocketChannel.accept();
 
-			if (sc == null) {
+			if (socketChannel == null) {
 				// no connections, snooze a while
 				Thread.sleep (2000);
 			} else {
-				System.out.println ("Incoming connection from: "
-					+ sc.socket().getRemoteSocketAddress());
+				System.out.println("Incoming connection from: "
+										   + socketChannel.socket().getRemoteSocketAddress());
 
-				buffer.rewind();
-				sc.write (buffer);
-				sc.close();
+				socketChannel.read(inputByteBuffer);
+				inputByteBuffer.flip();
+				StringBuffer stringBuffer = new StringBuffer();
+				while(inputByteBuffer.hasRemaining()) {
+					stringBuffer.append((char) inputByteBuffer.get());
+				}
+				System.out.println("server: " + stringBuffer.toString());
+
+				outputByteBuffer.rewind();
+				socketChannel.write(outputByteBuffer);
+				socketChannel.close();
 			}
 		}
 	}
